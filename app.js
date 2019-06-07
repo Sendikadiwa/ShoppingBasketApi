@@ -10,5 +10,6 @@ app.use(express.json({ extended: false }));
 
 // define routes
 app.use('/api/v1/users', require('./routes/api/users'));
+app.use('/api/v1/auth', require('./routes/api/auth'));
 
 module.exports = app;

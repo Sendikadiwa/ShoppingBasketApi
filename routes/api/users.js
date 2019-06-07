@@ -5,10 +5,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 // Load User model
-const User = require('../models/User');
+const User = require('../../models/User');
 
 router.post(
-  '/register',
+  '/',
   [
     check('name', 'Name is required')
       .trim()
@@ -47,6 +47,7 @@ router.post(
       await user.save();
 
       // Generate and return a jwt token
+      /* we want to send the user id as the payload so that we can i dentify which user with the token  */
       const payload = {
         user: { id: user.id }
       };
@@ -65,5 +66,6 @@ router.post(
     }
   }
 );
+
 
 module.exports = router;

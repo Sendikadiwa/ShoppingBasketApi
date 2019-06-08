@@ -7,6 +7,11 @@ const { check, validationResult } = require('express-validator/check');
 const User = require('../../models/User');
 const Basket = require('../../models/Basket');
 
+/*
++End Point:   POST api/baskets
++Description: Get all users baskets
++Access:      Private
+*/
 router.post(
   '/',
   [
@@ -36,5 +41,23 @@ router.post(
     }
   }
 );
+
+/*
++End Point:   GET api/baskets
++Description: Get all users baskets
++Access:      Private
+*/
+router.get('/', auth, async (req, res) => {
+  try {
+    const baskets = await Basket.find(req.user.id).sort({ date: -1 });
+    if (!baskets) {
+      return res.status(404).json({ msg: 'No baskets found.' });
+    }
+    res.json(baskets);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 module.exports = router;

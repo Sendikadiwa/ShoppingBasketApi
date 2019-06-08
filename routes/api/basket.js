@@ -92,7 +92,7 @@ router.delete('/:id', auth, async (req, res) => {
       return res.status(404).json({ msg: 'No basket found' });
     }
     // check its the right user deleting the basket
-    if (basket.user!== req.user.id) {
+    if (basket.user !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' });
     }
     // remove basket
@@ -104,4 +104,48 @@ router.delete('/:id', auth, async (req, res) => {
   }
 });
 
+/*
++End Point:   UPDATE api/baskets/basket_id
++Description: Update user basket by id
++Access:      Private
+*/
+router.put(
+  '/:id',
+  [
+    check('name', 'Name is required.')
+      .trim()
+      .not()
+      .isEmpty()
+  ],
+  auth,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { name } = req.body;
+    const myBasket = {};
+    if (name) myBasket.name = name;
+
+    try {
+      let basket = await Basket.findById(req.params.id);
+      // check if basket exists
+      if (!basket) return res.status(404).json({ msg: 'Basket not found' });
+      // check if the user owns the basket
+      if (basket.user !== req.user.id) {
+        return res.status(404).json({ msg: 'User not authorized.' });
+      }
+      // update basket
+      basket = await Basket.findByIdAndUpdate(
+        req.params.id,
+        { $set: myBasket },
+        { new: true }
+      );
+      res.json(basket);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 module.exports = router;

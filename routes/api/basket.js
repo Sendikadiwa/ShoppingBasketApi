@@ -60,4 +60,48 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+/*
++End Point:   GET api/baskets/basket_id
++Description: Get user basket by id
++Access:      Private
+*/
+
+router.get('/:id', auth, async (req, res) => {
+  try {
+    const basket = await Basket.findById(req.params.id);
+    if (!basket) {
+      return res.status(404).json({ msg: 'No basket found' });
+    }
+    // return basket
+    res.json(basket);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+/*
++End Point:   DELETE api/baskets/basket_id
++Description: Delete user basket by id
++Access:      Private
+*/
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const basket = await Basket.findById(req.params.id);
+    if (!basket) {
+      return res.status(404).json({ msg: 'No basket found' });
+    }
+    // check its the right user deleting the basket
+    if (basket.user!== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+    // remove basket
+    basket.remove();
+    res.json({ msg: 'Basket remove' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;

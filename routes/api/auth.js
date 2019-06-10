@@ -45,7 +45,7 @@ router.post(
       // generate token
       const payload = {
         user: {
-          _id: user.id
+          id: user.id
         }
       };
       jwt.sign(

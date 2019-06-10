@@ -49,7 +49,7 @@ router.post(
 */
 router.get('/', auth, async (req, res) => {
   try {
-    const baskets = await Basket.find({user:req.user.id}).sort({ date: -1 });
+    const baskets = await Basket.find({ user: req.user.id }).sort({ date: -1 });
     if (!baskets) {
       return res.status(404).json({ msg: 'No baskets found.' });
     }
@@ -149,7 +149,7 @@ router.put(
   }
 );
 
-router.post(
+router.put(
   '/item/:id',
   [
     check('name', 'Name is required')
@@ -164,7 +164,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      // const user = await User.findById(req.user.id);
       const basket = await Basket.findById(req.params.id);
       const newItem = {
         name: req.body.name,
@@ -180,4 +179,34 @@ router.post(
   }
 );
 
+/*
++End Point:   DELETE api/baskets/basket_id
++Description: Delete user item from basket
++Access:      Private
+*/
+router.delete('/item/:id/:item_id', auth, async (req, res) => {
+  try {
+    // find the basket first
+    const basket = await Basket.findById(req.params.id);
+    // get out the item from the item array
+    const item = basket.items.find(item => item.id === req.params.item_id);
+    // check if item exists
+    if (!item) {
+      return res.status(400).json({ msg: 'Item not found' });
+    }
+    // Check that the owner of the basket is one deleting the item
+    if (item.user === req.user.id) {
+      return res.status(401).json({ msg: 'User not Authorized' });
+    }
+    const filterdItems = basket.items.map(item => item.id).indexOf(req.params.item_id);
+    
+    basket.items.splice(filterdItems, 1);
+    basket.save()
+    res.json(basket.items);
+
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server Error');
+  }
+});
 module.exports = router;

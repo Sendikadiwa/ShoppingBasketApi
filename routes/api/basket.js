@@ -49,7 +49,7 @@ router.post(
 */
 router.get('/', auth, async (req, res) => {
   try {
-    const baskets = await Basket.find(req.user.id).sort({ date: -1 });
+    const baskets = await Basket.find({user:req.user.id}).sort({ date: -1 });
     if (!baskets) {
       return res.status(404).json({ msg: 'No baskets found.' });
     }
@@ -148,4 +148,36 @@ router.put(
     }
   }
 );
+
+router.post(
+  '/item/:id',
+  [
+    check('name', 'Name is required')
+      .trim()
+      .not()
+      .isEmpty()
+  ],
+  auth,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+      // const user = await User.findById(req.user.id);
+      const basket = await Basket.findById(req.params.id);
+      const newItem = {
+        name: req.body.name,
+        user: req.user.id
+      };
+      basket.items.unshift(newItem);
+      await basket.save();
+      res.json(basket.items);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 module.exports = router;

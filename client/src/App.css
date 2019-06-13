@@ -1,0 +1,7 @@
+body {
+  font-family: 'Roboto Condensed', sans-serif;
+  background-color: #F7FAFC;
+}
+.container{
+  max-width: 960px;
+}

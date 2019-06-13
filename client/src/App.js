@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
 import './App.css';
+import Navbar from './components/layouts/Navbar';
+import Register from './components/auth/Register';
+import store from './store';
+import Alert from './components/layouts/Alert';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Hello</h1>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <Fragment>
+          <Navbar />
+          <div className='container'>
+            <Alert />
+            <Switch>
+              <Route exact='/' component={Register} />
+            </Switch>
+          </div>
+        </Fragment>
+      </Router>
+    </Provider>
   );
 }
 

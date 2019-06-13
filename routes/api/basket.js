@@ -149,6 +149,11 @@ router.put(
   }
 );
 
+/*
++End Point:   POST api/baskets/item/basket_id
++Description: Add Item to basket
++Access:      Private
+*/
 router.post(
   '/item/:id',
   [

@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <nav class='navbar navbar-expand-lg bg-gray-400'>
+    <nav className='navbar navbar-expand-lg bg-gray-400'>
       <div className='container'>
-        <Link class='navbar-brand font-bold' to='/'>
+        <Link className='navbar-brand font-bold' to='/'>
           Shopping Basket
         </Link>
         <button
-          class='navbar-toggler'
+          className='navbar-toggler'
           type='button'
           data-toggle='collapse'
           data-target='#navbarNav'
@@ -17,13 +17,13 @@ const Navbar = () => {
           aria-expanded='false'
           aria-label='Toggle navigation'
         >
-          <span class='navbar-toggler-icon' />
+          <span className='navbar-toggler-icon' />
         </button>
-        <div class='collapse navbar-collapse' id='navbarNav'>
-          <ul class='navbar-nav ml-auto'>
-            <li class='nav-item'>
+        <div className='collapse navbar-collapse' id='navbarNav'>
+          <ul className='navbar-nav ml-auto'>
+            <li className='nav-item'>
               <Link
-                class='nav-link btn btn-outline-secondary btn-sm px-3'
+                className='nav-link btn btn-outline-secondary btn-sm px-3'
                 to='/'
               >
                 Login

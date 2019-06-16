@@ -16,7 +16,7 @@ function App() {
           <div className='container'>
             <Alert />
             <Switch>
-              <Route exact='/' component={Register} />
+              <Route exact path='/' component={Register} />
             </Switch>
           </div>
         </Fragment>

@@ -52,14 +52,18 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ msg: 'Failed! Please check password or email' });
+          .json({
+            errors: [{ msg: 'Failed! Please check password or email' }]
+          });
       }
       // match user password
       const passwordMatched = await bcrypt.compare(password, user.password);
       if (!passwordMatched) {
         return res
           .status(400)
-          .json({ msg: 'Failed! Please check password or email' });
+          .json({
+            errors: [{ msg: 'Failed! Please check password or email' }]
+          });
       }
       // generate token
       const payload = {

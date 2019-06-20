@@ -24,7 +24,7 @@ const Navbar = () => {
             <li className='nav-item'>
               <Link
                 className='nav-link btn btn-outline-secondary btn-sm px-3'
-                to='/'
+                to='/login'
               >
                 Login
               </Link>

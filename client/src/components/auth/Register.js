@@ -1,11 +1,11 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { setAlert } from '../../actions/alert';
 import { registerUser } from '../../actions/auth';
 
-function Register({ registerUser }) {
+function Register({ registerUser, isAuthenticated }) {
   const [userData, setUserData] = useState({
     name: '',
     email: '',
@@ -22,6 +22,10 @@ function Register({ registerUser }) {
     e.preventDefault();
     registerUser({ name, email, password });
   };
+  // redirect to dashboard
+  if (isAuthenticated) {
+    return <Redirect to='/dashboard' />;
+  }
   return (
     <Fragment>
       <div className='container flex flex-row justfiy-between'>
@@ -32,7 +36,7 @@ function Register({ registerUser }) {
           <p className='text-gray-700 mr-5 leading-relaxed'>
             Get away with papers and note books when you want to quickly create
             a shopping list. This application helps you create, delete, and
-            update your list with easy anytime anywhere.{' '}
+            update your list with ease anytime anywhere.{' '}
             <span className='bg-gray-600 p-1 text-white'>Give it a try.</span>
           </p>
         </div>
@@ -96,10 +100,13 @@ function Register({ registerUser }) {
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
-  registerUser: PropTypes.func.isRequired
+  registerUser: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
 };
-
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
 export default connect(
-  null,
+  mapStateToProps,
   { setAlert, registerUser }
 )(Register);

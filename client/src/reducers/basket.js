@@ -1,7 +1,7 @@
-import { GET_BASKETS, BASKET_ERROR } from '../actions/types'
+import { GET_BASKETS, BASKET_ERROR, ADD_BASKET } from '../actions/types'
 
 const initialState = {
-	baskets: null,
+	baskets: [],
 	loading: true,
 	error: {},
 }
@@ -14,6 +14,11 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				baskets: payload,
+				loading: false,
+			}
+		case ADD_BASKET:
+			return {
+				baskets: [payload, ...state.baskets],
 				loading: false,
 			}
 		case BASKET_ERROR:

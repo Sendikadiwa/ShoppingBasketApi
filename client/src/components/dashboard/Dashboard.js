@@ -4,15 +4,18 @@ import PropTypes from 'prop-types'
 import { getBaskets } from '../../actions/basket'
 import Spinner from '../layouts/Spinner'
 import Baskets from '../Baskets/Baskets'
-function Dashboard({
+import BasketForm from '../Baskets/BasketForm';
+
+const Dashboard = ({
 	getBaskets,
 	basket: { loading, baskets },
 	auth: { user },
-}) {
+}) => {
 	useEffect(() => {
 		getBaskets()
 	}, [getBaskets])
-	return loading && baskets === null ? (
+	
+	return loading ? (
 		<Spinner />
 	) : (
 		<Fragment>
@@ -26,22 +29,7 @@ function Dashboard({
 			</div>
 			<div className='row'>
 				<div className='col-md-5'>
-					<form className='w-full max-w-sm'>
-						<div className='flex items-center border-b border-b-2 border-teal-500 py-2'>
-							<input
-								className='appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none'
-								type='text'
-								placeholder='Basket category'
-								aria-label='Full name'
-							/>
-							<button
-								className='flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded'
-								type='button'>
-								Create Basket
-							</button>
-							
-						</div>
-					</form>
+					<BasketForm />
 				</div>
 				<div className='col-md-7'>
 					{baskets !== null ? (

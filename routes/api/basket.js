@@ -92,7 +92,7 @@ router.delete('/:id', auth, async (req, res) => {
       return res.status(404).json({ msg: 'No basket found' });
     }
     // check its the right user deleting the basket
-    if (basket.user !== req.user.id) {
+    if (basket.user.toString() !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' });
     }
     // remove basket

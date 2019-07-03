@@ -10,7 +10,8 @@ import Alert from './components/layouts/Alert'
 import setAuthToken from './utils/setAuthToken'
 import { loadUser } from './actions/auth'
 import PrivateRoute from './components/routing/PrivateRoute'
-import Dashboard from './components/dashboard/Dashboard'
+import Baskets from './components/baskets/Baskets'
+import AddBasket from './components/basket-forms/AddBasket';
 
 if (localStorage.token) {
 	setAuthToken(localStorage.token)
@@ -29,7 +30,8 @@ const App = () => {
 						<Switch>
 							<Route exact path='/' component={Register} />
 							<Route exact path='/login' component={Login} />
-							<PrivateRoute exact path='/dashboard' component={Dashboard} />
+							<PrivateRoute exact path='/baskets' component={Baskets} />
+							<PrivateRoute exact path='/add_basket' component={AddBasket} />
 						</Switch>
 					</div>
 				</Fragment>

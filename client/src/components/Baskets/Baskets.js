@@ -1,35 +1,70 @@
-import React, { Fragment } from 'react'
+import React, { useEffect, Fragment } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import Moment from 'react-moment'
-import moment from 'moment'
+import { getBaskets } from '../../actions/basket'
+import Spinner from '../layouts/Spinner'
+import BasketItem from './BasketItem'
 
-const Baskets = ({ basket }) => {
-	const baskets = basket.map(bask => (
-		<ul key={bask._id} className='list-group'>
-			<li className='list-group-item list-group-item-action'>
-				<div className='d-flex w-100 justify-content-between'>
-					<p className='lead text-teal-700'> {bask.name}</p>
-					<div>
-						<a href='!#' className='mx-3'>
-							<i className='fas fa-edit text-orange-600' />
-						</a>
-						<a href='!#'>
-							<i className='fas fa-trash' />
-						</a>
-					</div>
+const Baskets = ({
+	getBaskets,
+	basket: { loading, baskets },
+	auth: { user },
+}) => {
+	useEffect(() => {
+		getBaskets()
+	}, [getBaskets])
+
+	return loading ? (
+		<Spinner />
+	) : (
+		<Fragment>
+			<div className='my-3'>
+				<h1 className='text-4xl text-black'>Dashboard</h1>
+				<p className='lead'>
+					<i className='far fa-user' /> Welcome{' '}
+					<span className='text-blue-600 text-sm'>{user && user.name}</span>
+				</p>
+				<hr className='mb-5' />
+			</div>
+			<div className='flex justify-between'>
+				<div>
+					<Link
+						to='/add_basket'
+						className='cursor-pointer bg-gray-700 hover:no-underline hover:bg-gray-800 py-2 px-4 text-white font-bold rounded'>
+						Add Basket
+					</Link>
 				</div>
-				<small>
-					Created on:{' '}
-					<Moment format='YYYY/MM/DD'>{moment.utc(bask.date)}</Moment>
-				</small>
-			</li>
-		</ul>
-	))
-	return <Fragment>{baskets}</Fragment>
+
+				{/* search */}
+			</div>
+			<div className='row justify-center'>
+				<div className='col-md-8 mt-5'>
+					{baskets !== null ? (
+						<Fragment>
+							{baskets.map(basket => (
+								<BasketItem key={basket._id} basket={basket} />
+							))}
+						</Fragment>
+					) : (
+						<p>You currently have no baskets</p>
+					)}
+				</div>
+			</div>
+		</Fragment>
+	)
 }
 
 Baskets.propTypes = {
-	basket: PropTypes.array.isRequired,
+	basket: PropTypes.object.isRequired,
+	auth: PropTypes.object.isRequired,
 }
 
-export default Baskets
+const mapStateToprops = state => ({
+	basket: state.basket,
+	auth: state.auth,
+})
+export default connect(
+	mapStateToprops,
+	{ getBaskets },
+)(Baskets)

@@ -8,10 +8,17 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 	const authLinks = (
 		<ul className='navbar-nav ml-auto'>
 			<li className='nav-item'>
-				<a
-					onClick={logout}
-					className='nav-link btn btn-outline-secondary btn-sm px-3'
-					href='#!'>
+				<Link className='nav-link text-gray-700' to='/baskets'>
+					Baskets
+				</Link>
+			</li>
+			<li className='nav-item'>
+				<Link className='nav-link text-gray-700' to='/about'>
+					About
+				</Link>
+			</li>
+			<li className='nav-item'>
+				<a onClick={logout} className='nav-link text-gray-700' href='#!'>
 					Logout
 				</a>
 			</li>

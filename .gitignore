@@ -5,6 +5,7 @@ node_modules/
 
 # dotev environmemnt variables
 .env
+test.env
 
 # Optional npm cache directory
 .npm

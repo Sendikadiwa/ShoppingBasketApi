@@ -6,7 +6,7 @@ const BasketSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'user'
   },
-  name: {
+  category: {
     type: String,
     require: true
   },

@@ -1,16 +1,15 @@
 const express = require('express')
 const app = express()
-const connectMongoDb = require('./config/db')
+const DBconnection = require('./entrance/db')
+const config = require('config')
 
 // Db connection
-connectMongoDb()
+DBconnection()
 
-// init middleware
-app.use(express.json({ extended: false }))
+// routes
+require('./entrance/routes')(app)
 
-// define routes
-app.use('/api/v1/users', require('./routes/api/users'))
-app.use('/api/v1/auth', require('./routes/api/auth'))
-app.use('/api/v1/baskets', require('./routes/api/basket'))
-
-module.exports = app
+const port = process.env.PORT || 9000
+app.listen(port, () => {
+	console.log(`Server set up on port ${port}`)
+})

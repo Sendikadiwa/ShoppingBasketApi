@@ -2,10 +2,10 @@
 	"name": "shopping_basket_api",
 	"version": "1.0.0",
 	"description": "A Shopping basket application that allows users to keep track of the things they want to buy",
-	"main": "server.js",
+	"main": "app.js",
 	"scripts": {
-		"start": "node server.js",
-		"server": "env-cmd -f ./config/.env nodemon server.js"
+		"start": "node app.js",
+		"dev": "nodemon app.js"
 	},
 	"repository": {
 		"type": "git",
@@ -18,14 +18,14 @@
 	},
 	"homepage": "https://github.com/sendistephen/shopping_basket_api#readme",
 	"devDependencies": {
-		"env-cmd": "^9.0.2",
 		"nodemon": "^1.19.1"
 	},
 	"dependencies": {
-		"bcryptjs": "^2.4.3",
+		"@hapi/joi": "^15.1.0",
+		"bcrypt": "^3.0.6",
 		"config": "^3.1.0",
 		"express": "^4.17.1",
-		"express-validator": "^5.3.1",
+		"joi-objectid": "^2.0.0",
 		"jsonwebtoken": "^8.5.1",
 		"mongoose": "^5.5.12"
 	}

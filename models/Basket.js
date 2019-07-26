@@ -1,31 +1,26 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const { itemSchema } = require('./item')
 
-const BasketSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'user'
-  },
-  category: {
-    type: String,
-    require: true
-  },
-  items: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: 'users'
-      },
-      name: {
-        type: String,
-        required: true
-      }
-    }
-  ],
-  date: {
-    type: Date,
-    default: Date.now
-  }
-});
 
-module.exports = Basket = mongoose.model('basket', BasketSchema);
+const basketSchema = new mongoose.Schema({
+	category: {
+		type: String,
+		required: true,
+		trim: true,
+		minlength: 3,
+		maxlength: 50,
+	},
+	item: {
+		type: itemSchema,
+		required: true,
+	},
+	modified_date: {
+		type: Date,
+		default: Date.now,
+	},
+})
+const Basket = mongoose.model('Basket', basketSchema)
+
+module.exports = {
+	Basket,
+}

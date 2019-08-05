@@ -98,8 +98,24 @@ describe('/api/v1/users', () => {
 			const res = await exec();
 
 			expect(res.status).toBe(400);
-        });
-        
+		});
+		it('Should return 400 if user registers with a password less than 5 characters', async () => {
+			name = 'Namutebi';
+			email = 'sendi.stev@gmail.com';
+			password = '73';
 
+			const res = await exec();
+
+			expect(res.status).toBe(400);
+		});
+		it('Should return 400 if user registers with white spaces for password', async () => {
+			name = 'Namutebi';
+			email = 'sendi.stev@gmail.com';
+			password = '  ';
+
+			const res = await exec();
+
+			expect(res.status).toBe(400);
+		});
 	});
 });

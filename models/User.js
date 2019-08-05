@@ -1,4 +1,6 @@
-const mongoose = require('mongoose')
+const bcrypt = require('bcrypt');
+const Joi = require('@hapi/joi');
+const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
 	name: {
@@ -25,6 +27,41 @@ const userSchema = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
-})
-const User = mongoose.model('User', userSchema)
-module.exports = { User }
+});
+
+// Encrypt plain user password only when it is modified
+userSchema.pre('save', async function(next) {
+	// check if doc is modified
+	const user = this;
+	if (user.isModified('password')) {
+		user.password = await bcrypt.hash(user.password, 10);
+	}
+	next();
+});
+
+const User = mongoose.model('User', userSchema);
+
+// validate user fields
+function validate(user) {
+	const schema = {
+		name: Joi.string()
+			.min(3)
+			.max(50)
+			.trim()
+			.required(),
+		email: Joi.string()
+			.min(10)
+			.max(255)
+			.trim()
+			.required()
+			.email(),
+		password: Joi.string()
+			.min(5)
+			.max(1024)
+			.trim()
+			.required(),
+	};
+	return Joi.validate(user, schema);
+}
+
+module.exports = { User, validate };

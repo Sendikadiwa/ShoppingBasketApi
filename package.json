@@ -9,7 +9,10 @@
 		"test": "jest --watchAll --verbose --runInBand"
 	},
 	"jest": {
-		"testEnvironment": "node"
+		"testEnvironment": "node",
+		"modulePaths": [
+			"<rootDir>"
+		]
 	},
 	"repository": {
 		"type": "git",

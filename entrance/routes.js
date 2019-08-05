@@ -1,9 +1,9 @@
-const express = require('express')
-const baskets = require('../routes/api/baskets')
+const express = require('express');
+const users = require('../routes/api/users');
 
 module.exports = function(app) {
-	app.use(express.json({ extended: false })) // parsing json requests
+	app.use(express.json({ extended: false })); // parsing json requests
 
 	// define application routes
-	app.use('/api/v1/baskets', baskets)
-}
+	app.use('/api/v1/users', users);
+};

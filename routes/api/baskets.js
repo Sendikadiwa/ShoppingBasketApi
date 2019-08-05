@@ -1,5 +1,5 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
 /*
    + GET /api/baskets
@@ -7,7 +7,14 @@ const router = express.Router()
 */
 
 router.get('/', (req, res) => {
-	res.send('Hello, world')
-})
+	res.send('Hello, world');
+});
 
-module.exports = router
+/*
+   + POST /api/v1/baskets
+   + Route for creating a new basket
+*/
+
+router.get('/', (req, res) => {});
+
+module.exports = router;

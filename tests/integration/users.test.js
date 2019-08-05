@@ -135,7 +135,6 @@ describe('/api/v1/users', () => {
 			expect(res.body).toHaveProperty('_id');
 			expect(res.body).toHaveProperty('name');
 			expect(res.body).toHaveProperty('email');
-			expect(res.body).toHaveProperty('password');
 		});
 	});
 });

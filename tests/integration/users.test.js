@@ -64,7 +64,7 @@ describe('/api/v1/users', () => {
 			expect(res.status).toBe(400);
 		});
 		it('Should return 400 if user registers with an invalid email', async () => {
-			name = 'kats@example.com';
+			name = 'Namutebi';
 			email = 'kats.example';
 			password = '73&6ehehfkk';
 
@@ -73,7 +73,7 @@ describe('/api/v1/users', () => {
 			expect(res.status).toBe(400);
 		});
 		it('Should return 400 if user registers with white spaces for email', async () => {
-			name = 'kats@example.com';
+			name = 'Namutebi';
 			email = '  ';
 			password = '73&6ehehfkk';
 
@@ -116,6 +116,26 @@ describe('/api/v1/users', () => {
 			const res = await exec();
 
 			expect(res.status).toBe(400);
+		});
+		it('Should save user if valid information is provided', async () => {
+			name = 'Namutebi';
+			email = 'namutebi21@gmail.com';
+			password = 'sa@ra23-na][';
+
+			const res = await exec();
+
+			const user = await User.find({ email: 'namutebi21@gmail.com' });
+
+			expect(res.status).toBe(201);
+			expect(user).not.toBeNull();
+		});
+		it('Should return user if valid', async () => {
+			const res = await exec();
+
+			expect(res.body).toHaveProperty('_id');
+			expect(res.body).toHaveProperty('name');
+			expect(res.body).toHaveProperty('email');
+			expect(res.body).toHaveProperty('password');
 		});
 	});
 });

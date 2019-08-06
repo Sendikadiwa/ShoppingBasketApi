@@ -10,8 +10,21 @@
 	},
 	"jest": {
 		"testEnvironment": "node",
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js",
+			"jsx",
+			"json"
+		],
+		"roots": [
+			"<rootDir>"
+		],
 		"modulePaths": [
 			"<rootDir>"
+		],
+		"moduleDirectories": [
+			"node_modules"
 		]
 	},
 	"repository": {

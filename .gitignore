@@ -9,3 +9,6 @@ test.env
 
 # Optional npm cache directory
 .npm
+
+# coverage
+coverage/

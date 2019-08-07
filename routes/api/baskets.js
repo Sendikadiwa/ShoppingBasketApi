@@ -1,13 +1,20 @@
 const express = require('express');
 const router = express.Router();
+const { Basket, validate } = require('../../models/basket');
+const auth = require('../../middleware/auth');
 
-/*
-   + GET /api/baskets
-   + Route for a collection of baskets
-*/
+/**
+ * Gets all users baskets from `baskets` collection
+ * @param {*} req
+ * @param {*} res
+ * @returns {object} Returns baskets or empty array
+ */
+router.get('/', auth, async (req, res) => {
+	// find baskets in Basket doc
+	const baskets = await Basket.find({ user: req.user._id });
 
-router.get('/', (req, res) => {
-	res.send('Hello, world');
+	// return the baskets or empty array
+	res.send(baskets);
 });
 
 /*
@@ -15,6 +22,6 @@ router.get('/', (req, res) => {
    + Route for creating a new basket
 */
 
-router.get('/', (req, res) => {});
+router.post('/', (req, res) => {});
 
 module.exports = router;

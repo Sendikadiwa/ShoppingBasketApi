@@ -1,7 +1,12 @@
+const Joi = require('@hapi/joi');
 const mongoose = require('mongoose');
 const { itemSchema } = require('./item');
 
 const basketSchema = new mongoose.Schema({
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+	},
 	category: {
 		type: String,
 		required: true,
@@ -33,6 +38,21 @@ const basketSchema = new mongoose.Schema({
 });
 const Basket = mongoose.model('Basket', basketSchema);
 
+// validate basket fields
+function validate(basket) {
+	const schema = {
+		category: Joi.string()
+			.min(3)
+			.max(50)
+			.required(),
+		description: Joi.string()
+			.min(10)
+			.max(50)
+			.required(),
+	};
+	return Joi.validate(basket, schema);
+}
 module.exports = {
 	Basket,
+	validate,
 };

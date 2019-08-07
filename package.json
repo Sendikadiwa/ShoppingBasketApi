@@ -6,26 +6,10 @@
 	"scripts": {
 		"start": "node app.js",
 		"dev": "nodemon app.js",
-		"test": "jest --watchAll --verbose --runInBand"
+		"test": "jest --watchAll --verbose --runInBand --coverage"
 	},
 	"jest": {
-		"testEnvironment": "node",
-		"moduleFileExtensions": [
-			"ts",
-			"tsx",
-			"js",
-			"jsx",
-			"json"
-		],
-		"roots": [
-			"<rootDir>"
-		],
-		"modulePaths": [
-			"<rootDir>"
-		],
-		"moduleDirectories": [
-			"node_modules"
-		]
+		"testEnvironment": "node"
 	},
 	"repository": {
 		"type": "git",

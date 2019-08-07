@@ -68,7 +68,7 @@ function validate(user) {
 			.email(),
 		password: Joi.string()
 			.min(5)
-			.max(1024)
+			.max(255)
 			.trim()
 			.required(),
 	};

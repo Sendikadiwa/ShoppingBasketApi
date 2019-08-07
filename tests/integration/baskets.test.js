@@ -49,11 +49,17 @@ describe('/api/v1/baskets', () => {
 		};
 
 		it('Should get all baskets created by the user', async () => {
-			
 			const res = await exec();
 
 			expect(res.status).toBe(200);
 			expect(res.body).toHaveLength(1);
+		});
+
+		it('Should return 401 if user gets baskets when not logged in', async () => {
+			token = '';
+			const res = await exec();
+
+			expect(res.status).toBe(401);
 		});
 	});
 });

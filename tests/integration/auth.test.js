@@ -25,41 +25,43 @@ describe('/api/v1/auth', () => {
 	});
 
 	describe('POST /', () => {
-		let email;
 		let password;
+		let email;
 
 		const exec = async () => {
 			return await request(server)
 				.post('/api/v1/auth')
-				.send({ email, password });
+				.send({ email: dummyUser.email, password: dummyUser.password });
 		};
 
 		it('Should return 400 if email address is invalid', async () => {
-			email = '';
+			dummyUser.email = 'kadwa@gmail.com';
 			const res = await exec();
 			expect(res.status).toBe(400);
 		});
 		it('Should return 400 if password is invalid', async () => {
-			password = 'tty';
+			dummyUser.password = 'tty';
+			const res = await exec();
+			expect(res.status).toBe(400);
+        });
+        it('Should return 400 if password is does not match the existing password', async () => {
+			dummyUser.password = 'ka34@diwa';
 			const res = await exec();
 			expect(res.status).toBe(400);
 		});
 		it('Should return 400 if user email does not exist', async () => {
-			email = 'tty@gmail.com';
+			dummyUser.email = 'tty@gmail.com';
 			const res = await exec();
-			const user = await User.findOne({ email: email });
-            expect(res.status).toBe(400);
-            expect(user).toBeNull()
+			const user = await User.findOne({ email: dummyUser.email });
+			expect(res.status).toBe(400);
+			expect(user).toBeNull();
 		});
 		it('Should login existing user if credentials are valid', async () => {
-			email = dummyUser.email;
-			password = dummyUser.password;
 			const res = await exec();
 			expect(res.status).toBe(200);
-            
-            const user = await User.findOne({ email: email });
-            expect(user).not.toBeNull()
 
+			const user = await User.findOne({ email: dummyUser.email });
+			expect(user).not.toBeNull();
 		});
 	});
 });

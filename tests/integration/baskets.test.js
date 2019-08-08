@@ -168,7 +168,7 @@ describe('/api/v1/baskets', () => {
 			const res = await exec();
 			expect(res.status).toBe(401);
 		});
-		it.skip('Should return 404 if the id passed doesnot exist', async () => {
+		it('Should return 404 if the id passed doesnot exist', async () => {
 			id = 1;
 
 			const res = await exec();

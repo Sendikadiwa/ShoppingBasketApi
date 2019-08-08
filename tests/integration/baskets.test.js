@@ -192,5 +192,11 @@ describe('/api/v1/baskets', () => {
 			const basket = await Basket.findOne({ category: 'Category to delete' });
 			expect(basket).toBeNull();
 		});
+		it('Should return a deleted basket', async () => {
+			const res = await exec();
+
+			expect(res.body).toHaveProperty('_id', basket._id.toHexString());
+			expect(res.body).toHaveProperty('category', basket.category);
+		});
 	});
 });

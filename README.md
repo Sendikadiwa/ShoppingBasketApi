@@ -1,6 +1,7 @@
 # SHOPPING BASKET REST API
 
-[![Build Status](https://travis-ci.org/sendistephen/shopping_basket_api.svg?branch=develop)](https://travis-ci.org/sendistephen/shopping_basket_api)
+[![Maintainability](https://api.codeclimate.com/v1/badges/fdd7818f671514fff2e8/maintainability)](https://codeclimate.com/github/sendistephen/shopping_basket_api/maintainability) [![Coverage Status](https://coveralls.io/repos/github/sendistephen/shopping_basket_api/badge.svg)](https://coveralls.io/github/sendistephen/shopping_basket_api)
+
 
 Shopping Basket is an application that helps users create a list of items they want to buy so that they can keep track of them.
 

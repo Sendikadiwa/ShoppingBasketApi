@@ -127,4 +127,76 @@ describe('/api/v1/baskets', () => {
 			expect(res.body).toHaveProperty('category');
 		});
 	});
+
+	describe('DELETE /:id', () => {
+		let token;
+		let basket;
+		let id;
+		let user2;
+
+		// create a global function
+		const exec = async () => {
+			return await request(server)
+				.delete(`/api/v1/baskets/${id}`)
+				.set('x-auth-token', token)
+				.send();
+		};
+
+		beforeEach(async () => {
+			basket = new Basket({
+				category: 'Category to delete',
+				description: 'Description to delete',
+				completed: true,
+				user: user1._id,
+			});
+			await basket.save();
+
+			id = basket._id;
+			token = new User(user1).generateAuthToken();
+
+			// create user2
+			user2 = new User({
+				name: 'Mugabi',
+				email: 'mugabi2019@gmail.com',
+				password: 'muG20aBiz-=t',
+			});
+			await user2.save();
+		});
+
+		it('Should return 401 if user is not logged in', async () => {
+			token = '';
+			const res = await exec();
+			expect(res.status).toBe(401);
+		});
+		it('Should return 404 if the id passed doesnot exist', async () => {
+			id = 1;
+
+			const res = await exec();
+			expect(res.status).toBe(404);
+		});
+		it('Should return 404 if an invalid id is passed', async () => {
+			id = mongoose.Types.ObjectId();
+
+			const res = await exec();
+			expect(res.status).toBe(404);
+		});
+		it('Should return 401 if user is an authorized to delete basket', async () => {
+			token = new User(user2).generateAuthToken();
+
+			const res = await exec();
+			expect(res.status).toBe(401);
+		});
+		it('Should delete a basket if a valid id is passed', async () => {
+			const res = await exec();
+			expect(res.status).toBe(200);
+			const basket = await Basket.findOne({ category: 'Category to delete' });
+			expect(basket).toBeNull();
+		});
+		it('Should return a deleted basket', async () => {
+			const res = await exec();
+
+			expect(res.body).toHaveProperty('_id', basket._id.toHexString());
+			expect(res.body).toHaveProperty('category', basket.category);
+		});
+	});
 });

@@ -20,18 +20,16 @@ const basketSchema = new mongoose.Schema({
 		maxlength: 50,
 		trim: true,
 	},
-	item: {
-		type: itemSchema,
-	},
+	item: [itemSchema],
 	completed: {
 		type: Boolean,
 		default: false,
 	},
-	created_date: {
+	createdAt: {
 		type: Date,
 		default: Date.now,
 	},
-	modified_date: {
+	modifiedAt: {
 		type: Date,
 		default: Date.now,
 	},
@@ -47,8 +45,7 @@ function validate(basket) {
 			.required(),
 		description: Joi.string()
 			.min(10)
-			.max(50)
-			.required(),
+			.max(50),
 	};
 	return Joi.validate(basket, schema);
 }

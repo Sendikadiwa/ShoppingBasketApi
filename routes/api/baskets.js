@@ -72,4 +72,16 @@ router.delete('/:id', auth, validateObjectId, async (req, res) => {
 	res.send(basket);
 });
 
+/**
+ * Updates a specific basket
+ * @async
+ * @param  {object} req - Request object
+ * @param {object} res - Response object
+ * @return {json} Returns json object
+ */
+router.put('/:id', auth, async (req, res) => {
+	const {error} = validate(req.body);
+	if(error) return res.status(400).send(error.details[0].message);
+});
+
 module.exports = router;

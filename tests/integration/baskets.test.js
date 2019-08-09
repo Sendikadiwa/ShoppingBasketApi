@@ -199,4 +199,82 @@ describe('/api/v1/baskets', () => {
 			expect(res.body).toHaveProperty('category', basket.category);
 		});
 	});
+
+	describe('PUT /:id', () => {
+		let user3;
+		let token;
+		let basket;
+		let id;
+		let newcategory;
+		let newdescription;
+		let newcompleted;
+
+		beforeEach(async () => {
+			basket = new Basket({
+				category: 'This is the old category',
+				description: 'This is a description is the old one',
+				completed: true,
+				user: user1._id,
+			});
+			await basket.save();
+
+			user3 = new User({
+				name: 'Robert',
+				email: 'rob@gmail.com',
+				password: 'ribG20aBiz-=t',
+			});
+			await user3.save();
+
+			id = basket._id;
+
+			token = new User(user1).generateAuthToken();
+
+			newcategory = 'This category is updated';
+			newdescription = 'This description is updated';
+			newcompleted = false;
+		});
+
+		const exec = async () => {
+			return await request(server)
+				.put(`/api/v1/baskets/${id}`)
+				.set('x-auth-token', token)
+				.send({ category: newcategory, description: newdescription, completed: newcompleted });
+		};
+
+		it('Should return 400 if category is less than 3 characters', async () => {
+			newcategory = 'b';
+			const res = await exec();
+			expect(res.status).toBe(400);
+		});
+		it('Should return 400 if category is morethan than 50 characters', async () => {
+			newcategory = new Array(56).join('b');
+			const res = await exec();
+			expect(res.status).toBe(400);
+		});
+		it('Should return 400 if description is less than than 10 characters', async () => {
+			newdescription = 'desc';
+			const res = await exec();
+			expect(res.status).toBe(400);
+		});
+		it('Should return 400 if category is morethan than 50 characters', async () => {
+			newdescription = new Array(56).join('b');
+			const res = await exec();
+			expect(res.status).toBe(400);
+		});
+		it('Should return 401 if user is not logged in', async () => {
+			token = '';
+			const res = await exec();
+			expect(res.status).toBe(401);
+		});
+		it('Should return 404 id passed doesnot exist', async () => {
+			id = mongoose.Types.ObjectId();
+			const res = await exec();
+			expect(res.status).toBe(404);
+		});
+		it('Should return 404 an invalid id is passed', async () => {
+			id = 1;
+			const res = await exec();
+			expect(res.status).toBe(404);
+		});
+	});
 });

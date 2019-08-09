@@ -46,6 +46,7 @@ function validate(basket) {
 		description: Joi.string()
 			.min(10)
 			.max(50),
+		completed: Joi.boolean(),
 	};
 	return Joi.validate(basket, schema);
 }

@@ -72,4 +72,35 @@ router.delete('/:id', auth, validateObjectId, async (req, res) => {
 	res.send(basket);
 });
 
+/**
+ * Updates a specific basket
+ * @async
+ * @param  {object} req - Request object
+ * @param {object} res - Response object
+ * @return {json} Returns json object
+ */
+router.put('/:id', auth, validateObjectId, async (req, res) => {
+	const { error } = validate(req.body);
+	if (error) return res.status(400).send(error.details[0].message);
+
+	let basket = await Basket.findById(req.params.id);
+	if (!basket) return res.status(404).send({ msg: 'The basket with the give ID is not found.' });
+
+	// check its the owner of the basket doing the update
+	if (basket.user.toString() !== req.user._id) {
+		return res.status(401).send({ msg: 'You are not Authorized!' });
+	}
+
+	basket = await Basket.findByIdAndUpdate(
+		req.params.id,
+		{
+			category: req.body.category,
+			description: req.body.description,
+			completed: req.body.completed,
+		},
+		{ new: true },
+	);
+	res.send(basket);
+});
+
 module.exports = router;

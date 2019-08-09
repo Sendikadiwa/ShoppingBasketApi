@@ -252,7 +252,7 @@ describe('/api/v1/baskets', () => {
 			expect(res.status).toBe(400);
 		});
 		it('Should return 400 if description is less than than 10 characters', async () => {
-			newcategory = 'desc';
+			newdescription = 'desc';
 			const res = await exec();
 			expect(res.status).toBe(400);
 		});
@@ -265,6 +265,16 @@ describe('/api/v1/baskets', () => {
 			token = '';
 			const res = await exec();
 			expect(res.status).toBe(401);
+		});
+		it('Should return 404 id passed doesnot exist', async () => {
+			id = mongoose.Types.ObjectId();
+			const res = await exec();
+			expect(res.status).toBe(404);
+		});
+		it('Should return 404 an invalid id is passed', async () => {
+			id = 1;
+			const res = await exec();
+			expect(res.status).toBe(404);
 		});
 	});
 });

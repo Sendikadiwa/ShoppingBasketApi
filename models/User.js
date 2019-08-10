@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const Joi = require('@hapi/joi');
-const mongoose = require('mongoose');
-const config = require('config');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const Joi = require("@hapi/joi");
+const mongoose = require("mongoose");
+const config = require("config");
 
 // Define user model
 const userSchema = new mongoose.Schema({
@@ -34,23 +34,23 @@ const userSchema = new mongoose.Schema({
 
 // Generate JWT token
 userSchema.methods.generateAuthToken = function() {
-	const token = jwt.sign({ _id: this._id }, config.get('secretOrPrivateKey'), {
+	const token = jwt.sign({ _id: this._id }, config.get("secretOrPrivateKey"), {
 		expiresIn: 360000,
 	});
 	return token;
 };
 
 // Encrypt plain user password only when it is modified
-userSchema.pre('save', async function(next) {
+userSchema.pre("save", async function(next) {
 	// check if doc is modified
 	const user = this;
-	if (user.isModified('password')) {
+	if (user.isModified("password")) {
 		user.password = await bcrypt.hash(user.password, 10);
 	}
 	next();
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 // validate user fields
 function validate(user) {

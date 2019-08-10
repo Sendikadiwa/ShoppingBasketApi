@@ -1,5 +1,7 @@
 # SHOPPING BASKET REST API
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/11edf48745ef45d58a26b798a419bc35)](https://app.codacy.com/app/sendistephen/shopping_basket_api?utm_source=github.com&utm_medium=referral&utm_content=sendistephen/shopping_basket_api&utm_campaign=Badge_Grade_Dashboard)
+
 Shopping Basket is an application that helps users create a list of items they want to buy so that they can keep track of them.
 
 ## Key Features

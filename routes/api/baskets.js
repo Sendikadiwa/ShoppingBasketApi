@@ -1,9 +1,10 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { Basket, validate } = require('../../models/basket');
-const auth = require('../../middleware/auth');
-const mongoose = require('mongoose');
-const validateObjectId = require('../../middleware/validateObjectId');
+const { Basket, validate } = require("../../models/basket");
+const { validateItem } = require("../../models/item");
+const auth = require("../../middleware/auth");
+const mongoose = require("mongoose");
+const validateObjectId = require("../../middleware/validateObjectId");
 
 /**
  * Gets all users baskets from `baskets` collection
@@ -12,7 +13,7 @@ const validateObjectId = require('../../middleware/validateObjectId');
  * @param {*} res object
  * @returns {object} Returns baskets or empty array
  */
-router.get('/', auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
 	// find baskets in Basket doc
 	const baskets = await Basket.find({ user: req.user._id }).sort({ createdAt: -1 });
 
@@ -28,13 +29,13 @@ router.get('/', auth, async (req, res) => {
  * @return {json} Returns json object
  */
 
-router.post('/', auth, async (req, res) => {
+router.post("/", auth, async (req, res) => {
 	const { error } = validate(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
 
 	// check if basket already exists with the same category
 	let basket = await Basket.findOne({ category: req.body.category });
-	if (basket) return res.status(400).send({ msg: 'Basket with that category already exists.' });
+	if (basket) return res.status(400).send({ msg: "Basket with that category already exists." });
 
 	basket = new Basket({
 		category: req.body.category,
@@ -53,16 +54,16 @@ router.post('/', auth, async (req, res) => {
  * @param {object} res - Response object
  * @return {json} Returns json object
  */
-router.delete('/:id', auth, validateObjectId, async (req, res) => {
+router.delete("/:id", auth, validateObjectId, async (req, res) => {
 	// find the basket to delete by its id
 	let basket = await Basket.findById(req.params.id);
 
 	// if does not exist return error msg
-	if (!basket) return res.status(404).send({ msg: 'The basket with the give ID is not found.' });
+	if (!basket) return res.status(404).send({ msg: "The basket with the give ID is not found." });
 
 	// enure its the owner deleting the basket
 	if (basket.user.toString() !== req.user._id) {
-		return res.status(401).send({ msg: 'You are not Authorized!' });
+		return res.status(401).send({ msg: "You are not Authorized!" });
 	}
 	// delete basket
 	const _id = req.params.id;
@@ -79,16 +80,16 @@ router.delete('/:id', auth, validateObjectId, async (req, res) => {
  * @param {object} res - Response object
  * @return {json} Returns json object
  */
-router.put('/:id', auth, validateObjectId, async (req, res) => {
+router.put("/:id", auth, validateObjectId, async (req, res) => {
 	const { error } = validate(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
 
 	let basket = await Basket.findById(req.params.id);
-	if (!basket) return res.status(404).send({ msg: 'The basket with the give ID is not found.' });
+	if (!basket) return res.status(404).send({ msg: "The basket with the give ID is not found." });
 
 	// check its the owner of the basket doing the update
 	if (basket.user.toString() !== req.user._id) {
-		return res.status(401).send({ msg: 'You are not Authorized!' });
+		return res.status(401).send({ msg: "You are not Authorized!" });
 	}
 
 	basket = await Basket.findByIdAndUpdate(
@@ -101,6 +102,47 @@ router.put('/:id', auth, validateObjectId, async (req, res) => {
 		{ new: true },
 	);
 	res.send(basket);
+});
+
+/**
+ * Updates a specific basket
+ * @async
+ * @param  {object} req - Request object
+ * @param {object} res - Response object
+ * @return {json} Returns json object
+ */
+
+router.post("/:bID/items", auth, async (req, res) => {
+	// check for possible errors
+	const { error } = validateItem(req.body);
+	if (error) return res.status(400).send(error.details[0].message);
+
+	// find the basket to add items too
+	let basket = await Basket.findById(req.params.bID);
+	if (!basket) return res.status(404).send({ msg: "Basket with that ID not found." });
+
+	// create a new item object
+	let item = {
+		name: req.body.name,
+		completed: req.body.completed,
+	};
+
+	// check that the right user is doing the operation
+	if (basket.user.toString() !== req.user._id)
+		return res.status(401).send({ msg: "You are not Authorized" });
+
+	// add item to the items array
+	basket.items.push(item);
+
+	// check if items exists
+	// if (basket.items.find(data => data.name === req.body.name))
+	// 	return res.status(400).send({ msg: "Item with that name already exists" });
+
+	// Save the changes in the doc
+	await basket.save();
+
+	// return the saved items
+	res.send(basket.items);
 });
 
 module.exports = router;

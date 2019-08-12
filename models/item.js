@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const Joi = require("@hapi/joi");
 
 const itemSchema = new mongoose.Schema({
 	name: {
@@ -14,6 +15,16 @@ const itemSchema = new mongoose.Schema({
 	},
 });
 
-const Item = mongoose.model('Item', itemSchema);
+function validateItem(item) {
+	const schema = {
+		name: Joi.string()
+			.min(3)
+			.max(50)
+			.trim()
+			.required(),
+		completed: Joi.boolean(),
+	};
+	return Joi.validate(item, schema);
+}
 
-module.exports = { Item, itemSchema };
+module.exports = { itemSchema, validateItem };

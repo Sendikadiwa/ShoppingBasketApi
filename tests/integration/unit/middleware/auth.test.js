@@ -1,9 +1,9 @@
-const { User } = require('../../../../models/user');
-const auth = require('../../../../middleware/auth');
-const mongoose = require('mongoose');
+const { User } = require("../../../../models/user");
+const auth = require("../../../../middleware/auth");
+const mongoose = require("mongoose");
 
-describe('auth middleware', () => {
-	it('Should populate req.user with the payload of a valid jwt', async () => {
+describe("auth middleware", () => {
+	it("Should populate req.user with the payload of a valid jwt", async () => {
 		const user = {
 			_id: mongoose.Types.ObjectId().toHexString(),
 		};

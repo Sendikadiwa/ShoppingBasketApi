@@ -1,11 +1,11 @@
-const Joi = require('@hapi/joi');
-const mongoose = require('mongoose');
-const { itemSchema } = require('./item');
+const Joi = require("@hapi/joi");
+const mongoose = require("mongoose");
+const { itemSchema } = require("./item");
 
 const basketSchema = new mongoose.Schema({
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
+		ref: "User",
 	},
 	category: {
 		type: String,
@@ -20,7 +20,7 @@ const basketSchema = new mongoose.Schema({
 		maxlength: 50,
 		trim: true,
 	},
-	item: [itemSchema],
+	items: [itemSchema],
 	completed: {
 		type: Boolean,
 		default: false,
@@ -34,7 +34,7 @@ const basketSchema = new mongoose.Schema({
 		default: Date.now,
 	},
 });
-const Basket = mongoose.model('Basket', basketSchema);
+const Basket = mongoose.model("Basket", basketSchema);
 
 // validate basket fields
 function validate(basket) {

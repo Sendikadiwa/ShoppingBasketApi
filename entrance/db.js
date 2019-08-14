@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const config = require("config");
 
-module.exports = function() {
+module.exports = async () => {
 	const db = config.get("db");
-	mongoose
+	await mongoose
 		.connect(db, {
 			useNewUrlParser: true,
 			useFindAndModify: false,
 			useCreateIndex: true,
 		})
-		.then(() => console.log(`Connected to ${config.get("db")}...`));
+		console.log(`Connected to ${config.get("db")}...`);
 };

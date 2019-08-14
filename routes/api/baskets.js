@@ -105,7 +105,7 @@ router.put("/:id", auth, validateObjectId, async (req, res) => {
 });
 
 /**
- * Updates a specific basket
+ * Add an item to a specific basket
  * @async
  * @param  {object} req - Request object
  * @param {object} res - Response object
@@ -142,6 +142,36 @@ router.post("/:bID/items", auth, async (req, res) => {
 	await basket.save();
 
 	// return the saved items
+	res.send(basket.items);
+});
+
+/**
+ * Deletes an item from a specific basket
+ * @async
+ * @param  {object} req - Request object
+ * @param {object} res - Response object
+ * @return {json} Returns json object
+ */
+
+router.delete("/:bID/items/:item_id", auth, async (req, res) => {
+	const basket = await Basket.findById(req.params.bID);
+	if (!basket) return res.status(404).send({ msg: "The basket with the given ID is not found." });
+
+	if (basket.items.filter(item => item._id.toString() === req.params.item_id).length === 0) {
+		return res.status(404).send({ msg: "The item with the given ID is not found." });
+	}
+
+	// check that the right user is doing the operation
+	if (basket.user.toString() !== req.user._id)
+		return res.status(401).send({ msg: "You are not Authorized" });
+
+	// get the index of the item and remove it
+	const removeItem = basket.items.map(item => item._id.toString()).indexOf(req.params.item_id);
+	basket.items.splice(removeItem, 1);
+	
+	// update basket
+	basket.save();
+
 	res.send(basket.items);
 });
 

@@ -1,16 +1,16 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const DBconnection = require('./entrance/db');
-const config = require('config');
+const dbConnection = require("./entrance/db");
+const config = require("config");
 
 // Db connection
-DBconnection();
+dbConnection();
 
 // routes
-require('./entrance/routes')(app);
+require("./entrance/routes")(app);
 
-if (!config.get('secretOrPrivateKey')) {
-	console.error('FATAL ERROR: secretOrPrivateKey is not defined.');
+if (!config.get("secretOrPrivateKey")) {
+	console.error("FATAL ERROR: secretOrPrivateKey is not defined.");
 	process.exit(1);
 }
 

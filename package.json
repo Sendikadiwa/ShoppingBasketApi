@@ -6,10 +6,16 @@
 	"scripts": {
 		"start": "node app.js",
 		"dev": "nodemon app.js",
-		"test": "jest --watchAll --verbose --runInBand --coverage"
+		"test": "jest --watchAll --verbose --runInBand --coverage",
+		"lint-md": "remark ."
 	},
 	"jest": {
 		"testEnvironment": "node"
+	},
+	"remarkConfig": {
+		"plugins": [
+			"remark-preset-lint-recommended"
+		]
 	},
 	"repository": {
 		"type": "git",
@@ -23,8 +29,16 @@
 	"homepage": "https://github.com/sendistephen/shopping_basket_api#readme",
 	"devDependencies": {
 		"coveralls": "^3.0.6",
+		"eslint": "^6.1.0",
+		"eslint-config-airbnb-base": "^14.0.0",
+		"eslint-config-prettier": "^6.0.0",
+		"eslint-plugin-import": "^2.18.2",
+		"eslint-plugin-prettier": "^3.1.0",
 		"jest": "^24.8.0",
 		"nodemon": "^1.19.1",
+		"prettier": "^1.18.2",
+		"remark-cli": "^7.0.0",
+		"remark-preset-lint-recommended": "^3.0.3",
 		"supertest": "^4.0.2"
 	},
 	"dependencies": {

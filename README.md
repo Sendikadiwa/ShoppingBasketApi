@@ -23,47 +23,47 @@ Shopping Basket is an application that helps users create a list of items they w
 
 Make sure you have Node.js(v10.16.0), npm(v6.9.0) & mongodb installed on your machine
 
-#### Clone this repository and cd into it.
+### Clone this repository and cd into it
 
-```
+```sh
 git clone https://github.com/sendistephen/shopping_basket_api.git && cd shopping_basket_api
 ```
 
-#### Install all project dependencies.
+### Install all project dependencies
 
-```
+```sh
 npm install
 ```
 
-#### Mongo connection setup
+### Mongo connection setup
 
 Edit your /config/default.json file to include the correct MongoDB URI
 
-#### Setup environment variables.
+### Setup environment variables
 
 Copy and paste the info below in your terminal respectively
 
 MAC
 
-```
+```sh
 export shoppingbasket_secretOrPrivateKey=yoursecretkey
 ```
 
 WINDOWS
 
-```
+```sh
 set shoppingbasket_secretOrPrivateKey=yoursecretkey
 ```
 
-#### Start the Application
+### Start the Application
 
-```
+```sh
 npm run dev  # Runs on http://localhost:9000
 ```
 
-#### To run tests
+### To run tests
 
-```
+```sh
 npm run test
 ```
 

@@ -29,8 +29,16 @@
 	"homepage": "https://github.com/sendistephen/shopping_basket_api#readme",
 	"devDependencies": {
 		"coveralls": "^3.0.6",
+		"eslint": "^6.1.0",
+		"eslint-config-airbnb-base": "^14.0.0",
+		"eslint-config-prettier": "^6.0.0",
+		"eslint-plugin-import": "^2.18.2",
+		"eslint-plugin-prettier": "^3.1.0",
 		"jest": "^24.8.0",
 		"nodemon": "^1.19.1",
+		"prettier": "^1.18.2",
+		"remark-cli": "^7.0.0",
+		"remark-preset-lint-recommended": "^3.0.3",
 		"supertest": "^4.0.2"
 	},
 	"dependencies": {
@@ -41,8 +49,6 @@
 		"joi-objectid": "^2.0.0",
 		"jsonwebtoken": "^8.5.1",
 		"lodash": "^4.17.15",
-		"mongoose": "^5.5.12",
-		"remark-cli": "^7.0.0",
-		"remark-preset-lint-recommended": "^3.0.3"
+		"mongoose": "^5.5.12"
 	}
 }

@@ -6,13 +6,18 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "jest --coverage  && cat ./tests/coverage/lcov.info | coveralls --watchAll --verbose --runInBand",
+    "test": "jest --coverage --watchAll --verbose --runInBand",
     "lint-md": "remark ."
   },
   "jest": {
     "testEnvironment": "node",
     "coverageDirectory": "./coverage/",
-    "collectCoverage": true
+    "collectCoverage": true,
+    " moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ]
   },
   "remarkConfig": {
     "plugins": [
@@ -35,6 +40,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.15.1",
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
     "nodemon": "^1.19.1",

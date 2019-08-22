@@ -1,5 +1,4 @@
 {
   "secretOrPrivateKey": "",
-  "db": "mongodb://localhost:27017/shopping_basket_api_testdb",
-  "CODECOV_TOKEN": "71c27d44-8f9e-4574-80f4-0fd0bf101740"
+  "db": "mongodb://localhost:27017/shopping_basket_api_testdb"
 }

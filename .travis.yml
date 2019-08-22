@@ -1,15 +1,14 @@
-sudo: false
 language: node_js
-node_js:
-  - stable
-cache:
-  directories:
-    - node_modules
-before_install:
-  - npm update
-install:
-  - npm install
-script:
-  - npm test
-after_success:
-  - bash <(curl -s https://codecov.io/bash) -e TRAVIS_NODE_VERSION
+
+node_js: 10.16
+services: mongodb
+env:
+  global:
+    - db=mongodb://localhost:27017/shopping_basket_api_testdb
+    - secretOrPrivateKey=thisissecret
+
+cache: npm
+
+before_script:
+  - sleep 15
+

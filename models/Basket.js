@@ -1,6 +1,6 @@
 const Joi = require("@hapi/joi");
 const mongoose = require("mongoose");
-const { itemSchema } = require("./Item");
+const { itemSchema } = require("./item");
 
 const basketSchema = new mongoose.Schema({
   user: {

@@ -12,3 +12,5 @@ cache: npm
 before_script:
   - sleep 15
 
+  script: npm test
+

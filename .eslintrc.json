@@ -3,10 +3,11 @@
     "browser": true,
     "node": true,
     "commonjs": true,
-    "es6": true
+    "es6": true,
+    "jest/globals": true
   },
   "extends": ["airbnb-base", "prettier"],
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "jest"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"

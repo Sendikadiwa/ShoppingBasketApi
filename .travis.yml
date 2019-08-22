@@ -10,7 +10,9 @@ env:
 cache: npm
 
 before_script:
+  - npm install
   - sleep 15
 
-  script: npm test
+script: npm test --coverage
+
 

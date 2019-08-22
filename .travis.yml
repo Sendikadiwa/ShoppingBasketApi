@@ -1,17 +1,20 @@
 language: node_js
 
 node_js: 10.16
-services: mongodb
+services: 
+  - mongodb
 env:
   global:
-    - db=mongodb://localhost:27017/shopping_basket_api_testdb
     - secretOrPrivateKey=thisissecret
 
-cache: npm
+cache:
+  directories:
+    - "node_modules"
 
 before_script:
   - npm install
   - sleep 15
+  - mongo shopping_basket_api_testdb --eval 'db.createUser({user:"Stephen2",pwd:"test1234",roles:["readWrite"]});'
 
 script: npm test --coverage
 

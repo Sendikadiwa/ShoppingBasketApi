@@ -1,0 +1,16 @@
+language: node_js
+
+node_js: 10.16
+services: mongodb
+env:
+  global:
+    - db=mongodb://localhost:27017/shopping_basket_api_testdb
+    - secretOrPrivateKey=thisissecret
+
+cache: npm
+
+before_script:
+  - sleep 15
+
+  script: npm test --coverage
+

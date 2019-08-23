@@ -1,6 +1,6 @@
 const Joi = require("@hapi/joi");
 const mongoose = require("mongoose");
-// const { itemSchema } = require("./Item");
+const { itemSchema } = require("./Item");
 
 const basketSchema = new mongoose.Schema({
   user: {
@@ -20,21 +20,7 @@ const basketSchema = new mongoose.Schema({
     maxlength: 50,
     trim: true
   },
-  items: [
-    {
-      name: {
-        type: String,
-        required: true,
-        minlength: 3,
-        maxlength: 50,
-        trim: true
-      },
-      completed: {
-        type: Boolean,
-        default: false
-      }
-    }
-  ],
+  items: [itemSchema],
   completed: {
     type: Boolean,
     default: false

@@ -13,6 +13,7 @@ cache:
 
 before_script:
   - npm install
+  - npm install coveralls
   - sleep 15
   - mongo shopping_basket_api_testdb --eval 'db.createUser({user:"Stephen2",pwd:"test1234",roles:["readWrite"]});'
 

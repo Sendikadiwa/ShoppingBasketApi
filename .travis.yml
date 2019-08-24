@@ -6,8 +6,8 @@ services:
 env:
   global:
     - secretOrPrivateKey=thisissecret
-
 cache: npm
+cache:
   directories:
     - "node_modules"
 
@@ -19,4 +19,5 @@ before_script:
 
 script: npm test --coverage
 
-after_success: jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+after_success:
+  - coveralls < coverage/lcov.info

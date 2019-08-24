@@ -63,6 +63,74 @@ describe("/api/v1/baskets", () => {
     });
   });
 
+  describe("GET /:id", () => {
+    let id;
+    let userFive;
+
+    // create a global function
+    const exec = async () => {
+      return await request(server)
+        .get(`/api/v1/baskets/${id}`)
+        .set("x-auth-token", token)
+        .send();
+    };
+
+    beforeEach(async () => {
+      basket = new Basket({
+        category: "Category to delete",
+        description: "Description to delete",
+        completed: true,
+        user: user1._id
+      });
+      await basket.save();
+
+      id = basket._id;
+      token = new User(user1).generateAuthToken();
+
+      // create user2
+      userFive = new User({
+        name: "Mutton",
+        email: "mutton@gmail.com",
+        password: "muton20aBiz-=t"
+      });
+      await userFive.save();
+    });
+
+    it("Should return 401 if user is not logged in", async () => {
+      token = "";
+      const res = await exec();
+      expect(res.status).toBe(401);
+    });
+    it("Should return 404 if the id passed doesnot exist", async () => {
+      id = 1;
+
+      const res = await exec();
+      expect(res.status).toBe(404);
+    });
+    it("Should return 404 if an invalid id is passed", async () => {
+      id = mongoose.Types.ObjectId();
+
+      const res = await exec();
+      expect(res.status).toBe(404);
+    });
+    it("Should return 401 if user is an authorized to get a single basket", async () => {
+      token = new User(userFive).generateAuthToken();
+
+      const res = await exec();
+      expect(res.status).toBe(401);
+    });
+    it("Should return a basket if a valid id is passed", async () => {
+      const res = await exec();
+      expect(res.status).toBe(200);
+    });
+    it("Should return a basket", async () => {
+      const res = await exec();
+
+      expect(res.body).toHaveProperty("_id", basket._id.toHexString());
+      expect(res.body).toHaveProperty("category", basket.category);
+    });
+  });
+
   describe("POST /", () => {
     let category;
     let description;

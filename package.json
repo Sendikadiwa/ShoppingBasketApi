@@ -9,6 +9,9 @@
     "test": "jest --coverage --runInBand --detectOpenHandles --forceExit",
     "lint-md": "remark ."
   },
+  "engines": {
+    "node": "10.16.0"
+  },
   "jest": {
     "testEnvironment": "node",
     "coverageDirectory": "./coverage",
@@ -47,9 +50,11 @@
   "dependencies": {
     "@hapi/joi": "^15.1.0",
     "bcrypt": "^3.0.6",
+    "compression": "^1.7.4",
     "config": "^3.2.2",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
+    "helmet": "^3.20.0",
     "joi-objectid": "^2.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",

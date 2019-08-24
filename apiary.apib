@@ -1,0 +1,340 @@
+FORMAT: 1A
+HOST: https://shoppingbasketpro.herokuapp.com/
+
+# Shopping Basket API
+
+Shopping Basket is an application that helps users create a list of items they want to buy so that they can keep track of them
+
+## Register [/api/v1/users/]
+
+### Register a new user [POST]
+This endpoint creates a new user. It takes a JSON object containing name, email and password.
+It returns a JSON object for the user on success
+
++ Request (application/json)
+
+        {
+            "name": "Ssendikadiwa",
+            "email": "sendi@gmail.com",
+            "password": "newPassword"
+            
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /api/v1/users
+
+    + Body
+
+            {
+                "name": "Ssendikadiwa",
+                "email": "sendi@gmail.com",
+                "password": "newPassword"
+            }
+
+## Login [/api/v1/auth]            
+
+### Login a user [POST]
+
+This endpoint signs in a registered user. It takes a JSON
+object containing an email and password and returns a token
+
++ Request (application/json)
+
+        {
+            "email": "sendi@gmail.com",
+            "password": "newPassword"
+            
+        }
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /api/v1/auth
+
+    + Body
+
+            {
+                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDVlYTBlYTNhYTY0NTQ3ZDA1ODUyZmIiLCJpYXQiOjE1NjY2NDg1ODksImV4cCI6MTU2NzAwODU4OX0.2Gj6CoW1hpvla1tihOq7asjpxSpQOmS97rNvTkjT1-0"
+            }
+
+## Add Baskets [/api/v1/baskets]            
+
+### Adds a new basket [POST]
+
+This endpoint adds a new basket. It takes a JSON
+object containing a basket category,description and
+Authorization token in header
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth-token: token
+    + Body
+
+            {
+                "category": "Home Shopping",
+                "description": "Home shopping for this month",
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /api/v1/baskets
+
+    + Body
+
+            {
+                "completed": false,
+                "_id": "5d6158fbf9df9d00170cb29b",
+                "category": "Home Shopping",
+                "description": "Home shopping for this month",
+                "user": "5d614abaf9df9d00170cb29a",
+                "items": [],
+                "createdAt": "2019-08-24T15:34:19.738Z",
+                "modifiedAt": "2019-08-24T15:34:19.738Z",
+            }
+    
+## Retrieve Baskets [/api/v1/baskets/]
+
+### Retrieve A list of baskets [GET]
+
+This endpoint retrieves a list of baskets for a specific user. 
+Request contains Authorization token in header
+
+    + Headers
+
+            x-auth-token: token
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /api/v1/baskets
+
+    + Body
+            
+            [
+               {
+                "completed": false,
+                "_id": "5d6158fbf9df9d00170cb29b",
+                "category": "Home Shopping",
+                "description": "Home shopping for this month",
+                "user": "5d614abaf9df9d00170cb29a",
+                "items": [],
+                "createdAt": "2019-08-24T15:34:19.738Z",
+                "modifiedAt": "2019-08-24T15:34:19.738Z",
+            } 
+            ]
+
+
+## Access single Basket [/api/v1/basket/basket_id]            
+
+### Retrieve a single basket [GET]
+
+This endpoint retrieves a single basket for a specific user. 
+Request contains Authorization token in header
+
+    + Headers
+
+            x-auth-token: token
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /api/v1/basket/basket_id
+
+    + Body
+
+            {
+                "completed": false,
+                "_id": "5d6158fbf9df9d00170cb29b",
+                "category": "Home Shopping",
+                "description": "Home shopping for this month",
+                "user": "5d614abaf9df9d00170cb29a",
+                "items": [],
+                "createdAt": "2019-08-24T15:34:19.738Z",
+                "modifiedAt": "2019-08-24T15:34:19.738Z",
+            }
+
+## Update Basket [/api/v1/basket/basket_id/]
+
+### Update a basket [PUT]
+
+This endpoint updates a specific basket for a specific user. 
+Request contains Authorization token in header
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth-token: token
+        
+    + Body
+
+             {
+                "category": "Home Shopping updated",
+                "description": "Home shopping for this month updated",
+            }
+
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /api/v1/basket/basket_id
+
+    + Body
+
+            {
+                "completed": false,
+                "_id": "5d6158fbf9df9d00170cb29b",
+                "category": "Home Shopping updated",
+                "description": "Home shopping for this month updated",
+                "user": "5d614abaf9df9d00170cb29a",
+                "items": [],
+                "createdAt": "2019-08-24T15:34:19.738Z",
+                "modifiedAt": "2019-08-24T15:34:19.738Z",
+            }
+
+## DELETE Basket [/api/v1/basket/basket_id/]
+
+### Delete a basket [DELETE]
+
+This endpoint deletes a specific basket for a specific user. 
+Request contains Authorization token in header
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth-token: token
+        
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /api/v1/basket/basket_id
+
+    + Body
+
+            {
+                "completed": false,
+                "_id": "5d6158fbf9df9d00170cb29b",
+                "category": "Home Shopping updated",
+                "description": "Home shopping for this month updated",
+                "user": "5d614abaf9df9d00170cb29a",
+                "items": [],
+                "createdAt": "2019-08-24T15:34:19.738Z",
+                "modifiedAt": "2019-08-24T15:34:19.738Z",
+            }
+
+## Retrieve Items [/api/v1/basket/basket_id/items]
+
+### Retrieve Items for a basket [GET]
+
+This endpoint retrieves items for basket for a specific user. 
+Request contains Authorization token in header
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth-token: token
+        
+
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /api/v1/basket/basket_id/items
+
+    + Body
+
+            {
+                "completed": false,
+                "_id": "5d6158fbf9df9d00170cb29b",
+                "category": "Home Shopping updated",
+                "description": "Home shopping for this month updated",
+                "user": "5d614abaf9df9d00170cb29a",
+                "items": [],
+                "createdAt": "2019-08-24T15:34:19.738Z",
+                "modifiedAt": "2019-08-24T15:34:19.738Z",
+            }
+
+## Add Item [/api/v1/basket/basket_id/items/]
+
+### Add Item to a basket [GET]
+
+This endpoint adds an item to a basket. 
+It takes a JSON object containing a name and
+Authorization token in header
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth-token: token
+        
+    + Body
+
+            {
+                "name": "Washing powder",
+            }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /api/v1/basket/basket_id/items
+
+    + Body
+
+            {
+                "completed": false,
+                "_id": "5d6158fbf9df9d00170cb29b",
+                "category": "Home Shopping updated",
+                "description": "Home shopping for this month updated",
+                "user": "5d614abaf9df9d00170cb29a",
+                "items": [
+                     "_id": "5d6157637gew0cb29b",
+                     "name": "Washing powder",
+                     "completed": false,
+                ],
+                "createdAt": "2019-08-24T15:34:19.738Z",
+                "modifiedAt": "2019-08-24T15:34:19.738Z",
+            }
+
+## Delete Item [/api/v1/basket/basket_id/items/item_id] 
+
+### Delete Item from a basket [DELETE]
+
+This endpoint deletes a specific item from basket. 
+It takes an Authorization token in header
+
++ Request (application/json)
+
+    + Headers
+
+            x-auth-token: token
+
++ Response 200 (application/json)
+
+    + Headers
+
+            Location: /api/v1/basket/basket_id/items/item_id
+
+    + Body
+
+            {
+                
+                "items": []
+            }

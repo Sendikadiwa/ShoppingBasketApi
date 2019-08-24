@@ -7,7 +7,7 @@ env:
   global:
     - secretOrPrivateKey=thisissecret
 
-cache:
+cache: npm
   directories:
     - "node_modules"
 

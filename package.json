@@ -6,13 +6,12 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "jest  --runInBand --detectOpenHandles",
+    "test": "jest --coverage --runInBand --detectOpenHandles",
     "lint-md": "remark ."
   },
   "jest": {
     "testEnvironment": "node",
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true
+    "coverageDirectory": "coverage"
   },
   "remarkConfig": {
     "plugins": [
@@ -30,7 +29,7 @@
   },
   "homepage": "https://github.com/sendistephen/shopping_basket_api#readme",
   "devDependencies": {
-    "codecov": "^3.5.0",
+    "coveralls": "^3.0.6",
     "eslint": "^6.1.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.0.0",

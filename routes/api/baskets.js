@@ -24,6 +24,32 @@ router.get("/", auth, async (req, res) => {
 });
 
 /**
+ * Gets all users baskets from `baskets` collection
+ * @async
+ * @param {*} req object
+ * @param {*} res object
+ * @returns {object} Returns baskets or empty array
+ */
+router.get("/:id", auth, validateObjectId, async (req, res) => {
+  // find baskets in Basket doc
+  const basket = await Basket.findById(req.params.id).sort({
+    createdAt: -1
+  });
+  // return 404 if doesnot exist
+  if (!basket)
+    return res
+      .status(404)
+      .send({ msg: "Basket with the given ID does not exists." });
+
+  // Ensure its the right user requesting access
+  if (basket.user.toString() !== req.user._id) {
+    return res.status(401).send({ msg: "You are not Authorized!" });
+  }
+  // return the basket or empty array
+  res.send(basket);
+});
+
+/**
  * Create a new basket
  * @async
  * @param  {object} req - Request object

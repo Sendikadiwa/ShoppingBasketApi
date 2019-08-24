@@ -10,9 +10,10 @@ dbConnection();
 // routes
 require("./entrance/routes")(app);
 
+require("./entrance/production")(app);
+
 if (!config.get("secretOrPrivateKey")) {
-  console.error("FATAL ERROR: secretOrPrivateKey is not defined.");
-  process.exit(1);
+  throw new Error("FATAL ERROR: secretOrPrivateKey is not defined.");
 }
 
 const port = process.env.PORT || 9000;

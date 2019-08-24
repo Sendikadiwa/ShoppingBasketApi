@@ -1,5 +1,7 @@
-module.exports = function(err, req, res) {
-  console.error(err.message, err);
+const logger = require("../entrance/log");
 
-  return res.status(500).send("Something broke!");
+module.exports = function(err, req, res) {
+  logger.error(err.message, err);
+
+  res.status(500).send("Something broke!");
 };

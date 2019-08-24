@@ -4,6 +4,9 @@
 
 Shopping Basket is an application that helps users create a list of items they want to buy so that they can keep track of them
 
+## Documentation
+This is the link to the api documentation [here](https://shoppingbasketapi.docs.apiary.io/)
+
 ## Key Features
 
 -   User can create an account and login

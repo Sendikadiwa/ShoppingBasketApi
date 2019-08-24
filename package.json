@@ -11,7 +11,8 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "coverageDirectory": "coverage"
+    "coverageDirectory": "./coverage",
+    "collectCoverage": true
   },
   "remarkConfig": {
     "plugins": [

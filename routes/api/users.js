@@ -1,4 +1,3 @@
-const _ = require("lodash");
 const express = require("express");
 
 const router = express.Router();
@@ -14,12 +13,12 @@ const { User, validate } = require("../../models/User");
 router.post("/", async (req, res) => {
   // validate user input
   const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send({ error: error.details[0].message });
 
   // find user by email
   let user = await User.findOne({ email: req.body.email });
   if (user)
-    return res.status(400).send({ msg: "This email is already taken." });
+    return res.status(400).send({ error: "This email is already taken." });
 
   // create new user object
   user = new User({
@@ -30,10 +29,7 @@ router.post("/", async (req, res) => {
   // save user
   await user.save();
 
-  // return saved user minus password
-  user = _.pick(user, ["_id", "name", "email"]);
-
-  res.status(201).send(user);
+  res.status(201).json({ msg: "Congraturations! Signup success" });
 });
 
 module.exports = router;

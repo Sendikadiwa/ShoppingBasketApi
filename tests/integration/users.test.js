@@ -125,17 +125,13 @@ describe("/api/v1/users", () => {
 
       const res = await exec();
 
-      const user = await User.find({ email: "namutebi21@gmail.com" });
-
       expect(res.status).toBe(201);
-      expect(user).not.toBeNull();
     });
-    it("Should return user if valid", async () => {
+
+    it("Should return success message if signup sucess", async () => {
       const res = await exec();
 
-      expect(res.body).toHaveProperty("_id");
-      expect(res.body).toHaveProperty("name");
-      expect(res.body).toHaveProperty("email");
+      expect(res.body.msg).toBe("Congraturations! Signup success");
     });
   });
 });

@@ -39,11 +39,11 @@ router.get("/:id", auth, validateObjectId, async (req, res) => {
   if (!basket)
     return res
       .status(404)
-      .send({ msg: "Basket with the given ID does not exists." });
+      .send({ error: "Basket with the given ID does not exists." });
 
   // Ensure its the right user requesting access
   if (basket.user.toString() !== req.user._id) {
-    return res.status(401).send({ msg: "You are not Authorized!" });
+    return res.status(401).send({ error: "You are not Authorized!" });
   }
   // return the basket or empty array
   res.send(basket);
@@ -59,14 +59,14 @@ router.get("/:id", auth, validateObjectId, async (req, res) => {
 
 router.post("/", auth, async (req, res) => {
   const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send({ error: error.details[0].message });
 
   // check if basket already exists with the same category
   let basket = await Basket.findOne({ category: req.body.category });
   if (basket)
     return res
       .status(400)
-      .send({ msg: "Basket with that category already exists." });
+      .send({ error: "Basket with that category already exists." });
 
   basket = new Basket({
     category: req.body.category,
@@ -93,11 +93,11 @@ router.delete("/:id", auth, validateObjectId, async (req, res) => {
   if (!basket)
     return res
       .status(404)
-      .send({ msg: "The basket with the give ID is not found." });
+      .send({ error: "The basket with the give ID is not found." });
 
   // enure its the owner deleting the basket
   if (basket.user.toString() !== req.user._id) {
-    return res.status(401).send({ msg: "You are not Authorized!" });
+    return res.status(401).send({ error: "You are not Authorized!" });
   }
   // delete basket
   const _id = req.params.id;
@@ -122,11 +122,11 @@ router.put("/:id", auth, validateObjectId, async (req, res) => {
   if (!basket)
     return res
       .status(404)
-      .send({ msg: "The basket with the give ID is not found." });
+      .send({ error: "The basket with the give ID is not found." });
 
   // check its the owner of the basket doing the update
   if (basket.user.toString() !== req.user._id) {
-    return res.status(401).send({ msg: "You are not Authorized!" });
+    return res.status(401).send({ error: "You are not Authorized!" });
   }
 
   basket = await Basket.findByIdAndUpdate(
@@ -152,12 +152,12 @@ router.put("/:id", auth, validateObjectId, async (req, res) => {
 router.post("/:bID/items", auth, async (req, res) => {
   // check for possible errors
   const { error } = validateItem(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send({ error: error.details[0].message });
 
   // find the basket to add items too
   const basket = await Basket.findById(req.params.bID);
   if (!basket)
-    return res.status(404).send({ msg: "Basket with that ID not found." });
+    return res.status(404).send({ error: "Basket with that ID not found." });
 
   // create a new item object
   const item = {
@@ -167,7 +167,7 @@ router.post("/:bID/items", auth, async (req, res) => {
 
   // check that the right user is doing the operation
   if (basket.user.toString() !== req.user._id)
-    return res.status(401).send({ msg: "You are not Authorized" });
+    return res.status(401).send({ error: "You are not Authorized" });
 
   // add item to the items array
   basket.items.push(item);
@@ -196,7 +196,7 @@ router.delete("/:bID/items/:item_id", auth, async (req, res) => {
   if (!basket)
     return res
       .status(404)
-      .send({ msg: "The basket with the given ID is not found." });
+      .send({ error: "The basket with the given ID is not found." });
 
   if (
     basket.items.filter(item => item._id.toString() === req.params.item_id)
@@ -204,12 +204,12 @@ router.delete("/:bID/items/:item_id", auth, async (req, res) => {
   ) {
     return res
       .status(404)
-      .send({ msg: "The item with the given ID is not found." });
+      .send({ error: "The item with the given ID is not found." });
   }
 
   // check that the right user is doing the operation
   if (basket.user.toString() !== req.user._id)
-    return res.status(401).send({ msg: "You are not Authorized" });
+    return res.status(401).send({ error: "You are not Authorized" });
 
   // get the index of the item and remove it
   const removeItem = basket.items

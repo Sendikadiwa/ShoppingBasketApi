@@ -27,24 +27,26 @@ function validate(req) {
  */
 router.post("/", async (req, res) => {
   const { error } = validate(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send({ error: error.details[0].message });
 
   // get user info
-  const { email, password } = req.body;
+  const { password } = req.body;
   // check if user email exists
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email: req.body.email });
   if (!user)
-    return res.status(400).send({ msg: "Email or password is invalid" });
+    return res.status(400).send({ error: "Email or password is invalid" });
 
   // compare password with hashed password in db
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch)
-    return res.status(400).send({ msg: "Email or password is invalid." });
+    return res.status(400).send({ error: "Email or password is invalid." });
 
   // login user and generate token
   const token = user.generateAuthToken();
 
-  res.status(200).send(token);
+  // return response with user and token to frontend client
+  const { _id, name, email } = user;
+  return res.status(200).send({ token, user: { _id, name, email } });
 });
 
 module.exports = router;

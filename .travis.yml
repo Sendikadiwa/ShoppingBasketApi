@@ -17,7 +17,7 @@ before_script:
   - sleep 15
   - mongo shopping_basket_api_testdb --eval 'db.createUser({user:"Stephen2",pwd:"test1234",roles:["readWrite"]});'
 
-script: npm test --coverage
+script: npm test -- -u --coverage
 
 after_success:
   - coveralls < coverage/lcov.info

@@ -1,4 +1,4 @@
 {
-	"secretOrPrivateKey":"",
-	"db": "mongodb://localhost:27017/shopping_basket_api"
+  "secretOrPrivateKey": "",
+  "db": "mongodb://localhost:27017/shopping_basket_api"
 }

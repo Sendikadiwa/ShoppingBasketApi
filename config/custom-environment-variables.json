@@ -1,3 +1,4 @@
 {
-	"secretOrPrivateKey": "shoppingbasket_secretOrPrivateKey"
+  "secretOrPrivateKey": "shoppingbasket_secretOrPrivateKey",
+  "db": "shoppingbasket_db"
 }

@@ -10,7 +10,7 @@
     "lint-md": "remark ."
   },
   "engines": {
-    "node": "10.16.0"
+    "node": "14.2.0"
   },
   "jest": {
     "testEnvironment": "node",
